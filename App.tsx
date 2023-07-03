@@ -1,11 +1,9 @@
 import { useFonts } from "expo-font";
-
-import { StatusBar } from "expo-status-bar";
-
 import { useColorScheme } from "react-native";
-
-import { Paragraph, Spacer, TamaguiProvider, Theme, YStack } from "tamagui";
+import { TamaguiProvider, Theme } from "tamagui";
 import config from "./tamagui.config";
+import Main from "./components/main";
+
 export default function App() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
@@ -18,19 +16,8 @@ export default function App() {
   }
   return (
     <TamaguiProvider config={config}>
-      <Theme name={colorScheme === "dark" ? "dark" : "light"}>
-        <YStack
-          f={1}
-          jc="center"
-          ai="center"
-          backgroundColor={"$backgroundSoft"}
-        >
-          <Paragraph color="$color" jc="center">
-            {colorScheme} Hi
-          </Paragraph>
-
-          <StatusBar style="auto" />
-        </YStack>
+      <Theme name={"dark"}>
+        <Main />
       </Theme>
     </TamaguiProvider>
   );
