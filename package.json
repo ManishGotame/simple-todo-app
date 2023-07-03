@@ -13,6 +13,7 @@
     "@tamagui/babel-plugin": "^1.36.6",
     "@tamagui/config": "^1.36.6",
     "@tamagui/font-inter": "^1.36.6",
+    "@tamagui/lucide-icons": "^1.36.6",
     "@tamagui/theme-base": "^1.36.6",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "expo": "~48.0.18",
