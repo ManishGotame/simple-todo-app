@@ -1,4 +1,4 @@
-import { XStack, YStack, Text, Spacer, Button } from "tamagui";
+import { XStack, YStack, Text, Spacer, Button, ScrollView } from "tamagui";
 import { H1 } from "tamagui";
 
 import { useState } from "react";
@@ -26,21 +26,17 @@ const sampleTasks: Task[] = [
 ];
 
 export default function Main() {
-  const [tasks, setTask] = useState<null | Task[]>([]);
-
-  const createTask = (task: Task) => {
-    console.log(task);
-  };
+  const [tasks, setTask] = useState<Task[]>(sampleTasks);
 
   return (
-    <>
-      <XStack
-        flex={1}
-        flexWrap="wrap"
-        jc="center"
-        ai="center"
-        backgroundColor="black"
-      >
+    <ScrollView
+      width="100%"
+      height="100%"
+      backgroundColor="$background"
+      padding="$4"
+      borderRadius="$4"
+    >
+      <XStack flex={1} flexWrap="wrap" jc="center" ai="center">
         <YStack space="$3">
           <Spacer />
           <H1> Todos </H1>
@@ -53,9 +49,9 @@ export default function Main() {
 
         <YStack>
           <Spacer />
-          <AddTasks title={"Create a Task"} createTask={createTask} />
+          <AddTasks tasks={tasks} setTask={setTask} />
         </YStack>
       </XStack>
-    </>
+    </ScrollView>
   );
 }

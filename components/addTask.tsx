@@ -13,10 +13,25 @@ import {
   TextArea,
 } from "tamagui";
 
+import { Task } from "./types";
+
 import { X } from "@tamagui/lucide-icons";
 
-export default function AddTasks({ title, createTask }) {
+export default function AddTasks({ tasks, setTask }) {
   const [open, setOpen] = useState(false);
+  const [taskTitle, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+
+  const createTask = () => {
+    const currentTasks = [...tasks];
+
+    const newTask: Task = {
+      title: taskTitle,
+      description: desc,
+    };
+    currentTasks.push(newTask);
+    setTask(currentTasks);
+  };
 
   return (
     <Dialog
@@ -63,7 +78,7 @@ export default function AddTasks({ title, createTask }) {
           exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
           space
         >
-          <Dialog.Title>{title}</Dialog.Title>
+          <Dialog.Title>Add Task</Dialog.Title>
           <Dialog.Description>
             Add the title and description for your task.
           </Dialog.Description>
@@ -71,18 +86,28 @@ export default function AddTasks({ title, createTask }) {
             <Label width={80} justifyContent="flex-end" htmlFor="title">
               Title
             </Label>
-            <Input flex={1} id="name" placeholder="Finish Notes" />
+            <Input
+              flex={1}
+              onChangeText={setTitle}
+              id="name"
+              placeholder="Finish Notes"
+            />
           </Fieldset>
           <Fieldset space="$4" horizontal>
             <Label width={80} justifyContent="flex-end" htmlFor="description">
               Description
             </Label>
-            <TextArea size="$4" borderWidth={2} width={255} />
+            <TextArea
+              onChangeText={setDesc}
+              size="$4"
+              borderWidth={2}
+              width={255}
+            />
           </Fieldset>
 
           <XStack alignSelf="flex-end" space>
             <Dialog.Close displayWhenAdapted asChild>
-              <Button theme="alt1" aria-label="Close">
+              <Button onPress={createTask} theme="alt1" aria-label="Close">
                 Create
               </Button>
             </Dialog.Close>
