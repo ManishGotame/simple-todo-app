@@ -26,7 +26,7 @@ const sampleTasks: Task[] = [
 ];
 
 export default function Main() {
-  const [tasks, setTask] = useState<Task[]>(sampleTasks);
+  const [tasks, setTask] = useState<Task[]>([]);
 
   return (
     <ScrollView
