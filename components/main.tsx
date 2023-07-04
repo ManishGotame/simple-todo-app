@@ -26,7 +26,7 @@ const sampleTasks: Task[] = [
 ];
 
 export default function Main() {
-  const [tasks, setTask] = useState<Task[]>([]);
+  const [tasks, setTask] = useState<Task[]>(sampleTasks);
 
   return (
     <ScrollView
@@ -39,7 +39,7 @@ export default function Main() {
       <XStack flex={1} flexWrap="wrap" jc="center" ai="center">
         <YStack space="$3">
           <Spacer />
-          <H1> Todos </H1>
+          <H1> Todo List</H1>
         </YStack>
 
         <YStack>
