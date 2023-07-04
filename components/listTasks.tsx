@@ -34,6 +34,7 @@ function TaskDetails({ id, tasks, setTask }: null | Task[]) {
   };
 
   // deletes task from the list
+  // this is buggy af
   const removeTask = () => {
     const currentTasks = [...tasks];
     currentTasks.splice(id, 1);

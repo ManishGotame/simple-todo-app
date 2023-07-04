@@ -20,7 +20,7 @@ const sampleTasks: Task[] = [
     description: "Use Degatchi's blog",
   },
   {
-    title: "Fuck",
+    title: "Work",
     description: "Self-explanatory",
   },
 ];
