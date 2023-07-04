@@ -44,7 +44,7 @@ export default function Main() {
 
         <YStack>
           <Spacer />
-          <ListTask tasks={tasks} />
+          <ListTask tasks={tasks} setTask={setTask} />
         </YStack>
 
         <YStack>

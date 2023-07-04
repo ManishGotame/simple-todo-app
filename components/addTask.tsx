@@ -89,7 +89,6 @@ export default function AddTasks({ tasks, setTask }) {
             <Input
               flex={1}
               onChangeText={setTitle}
-              id="name"
               placeholder="Finish Notes"
             />
           </Fieldset>
@@ -107,8 +106,13 @@ export default function AddTasks({ tasks, setTask }) {
 
           <XStack alignSelf="flex-end" space>
             <Dialog.Close displayWhenAdapted asChild>
-              <Button onPress={createTask} theme="alt1" aria-label="Close">
-                Create
+              <Button
+                onPress={createTask}
+                backgroundColor={"green"}
+                theme="alt1"
+                aria-label="Close"
+              >
+                Save
               </Button>
             </Dialog.Close>
           </XStack>

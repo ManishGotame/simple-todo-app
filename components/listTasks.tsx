@@ -1,4 +1,14 @@
-import { H2, H3, Spacer, Text, YStack } from "tamagui";
+import {
+  Dialog,
+  Fieldset,
+  H2,
+  H3,
+  Label,
+  Spacer,
+  Text,
+  TextArea,
+  YStack,
+} from "tamagui";
 
 import { Activity, ChevronRight } from "@tamagui/lucide-icons";
 import { ListItem, Separator, XStack, YGroup } from "tamagui";
@@ -9,10 +19,28 @@ import { ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import { Sheet } from "@tamagui/sheet";
 import { Button, H1, Input, Paragraph } from "tamagui";
 
-// onPress => pop up that should ask for task removal
-
-function TaskDetails({ task }: null | Task[]) {
+function TaskDetails({ id, tasks, setTask }: null | Task[]) {
   const [open, setOpen] = useState(false);
+  const [taskTitle, setTitle] = useState(tasks[id]?.title);
+  const [desc, setDesc] = useState(tasks[id]?.description);
+
+  // updates task details
+  const updateTaskDetails = () => {
+    const currentTasks = [...tasks];
+    currentTasks[id].title = taskTitle;
+    currentTasks[id].description = desc;
+
+    setTask(currentTasks);
+  };
+
+  // deletes task from the list
+  const removeTask = () => {
+    const currentTasks = [...tasks];
+    currentTasks.splice(id, 1);
+
+    setTask(currentTasks);
+  };
+
   return (
     <>
       <ListItem
@@ -20,8 +48,8 @@ function TaskDetails({ task }: null | Task[]) {
         pressTheme
         borderRadius={5}
         icon={Activity}
-        title={task?.title}
-        subTitle={task?.description}
+        title={tasks[id]?.title}
+        subTitle={tasks[id]?.description}
         iconAfter={ChevronRight}
         onPress={() => setOpen(true)}
       />
@@ -36,28 +64,72 @@ function TaskDetails({ task }: null | Task[]) {
         animation="bouncy"
       >
         <Sheet.Overlay />
-        <Sheet.Handle />
-        <Sheet.Frame
-          flex={1}
-          padding="$4"
-          justifyContent="center"
-          alignItems="center"
-          space="$5"
-        >
-          <Button
-            size="$6"
-            circular
-            icon={ChevronDown}
-            onPress={() => setOpen(false)}
-          />
-          <Input width={200} />
+        <Sheet.Frame flex={1} padding="$4" space="$5">
+          <Dialog modal>
+            <Dialog.Title>Edit Task</Dialog.Title>
+            <Spacer />
+            <Spacer />
+            <Dialog.Description>
+              Edit the title and description for your task.
+            </Dialog.Description>
+            <Spacer />
+            <Fieldset space="$4" horizontal>
+              <Label width={80} justifyContent="flex-end" htmlFor="title">
+                Title
+              </Label>
+              <Input
+                flex={1}
+                onChangeText={setTitle}
+                defaultValue={taskTitle}
+              />
+            </Fieldset>
+            <Spacer />
+            <Fieldset space="$4" horizontal>
+              <Label width={80} justifyContent="flex-end" htmlFor="description">
+                Description
+              </Label>
+              <TextArea
+                onChangeText={setDesc}
+                defaultValue={desc}
+                size="$4"
+                borderWidth={2}
+                width={255}
+              />
+            </Fieldset>
+
+            <Spacer />
+            <XStack alignSelf="flex-end" space>
+              <Button
+                theme="alt1"
+                aria-label="Close"
+                backgroundColor={"red"}
+                onPress={() => {
+                  removeTask();
+                  setOpen(false);
+                }}
+              >
+                Finished
+              </Button>
+              <Button
+                theme="alt1"
+                aria-label="Close"
+                backgroundColor={"green"}
+                onPress={() => {
+                  updateTaskDetails();
+                  setOpen(false);
+                }}
+              >
+                Save
+              </Button>
+            </XStack>
+          </Dialog>
         </Sheet.Frame>
       </Sheet>
     </>
   );
 }
 
-export default function ListTask({ tasks }: null | Task[]) {
+export default function ListTask({ tasks, setTask }) {
   return (
     <>
       <YGroup
@@ -70,8 +142,8 @@ export default function ListTask({ tasks }: null | Task[]) {
         <YGroup.Item>
           {tasks !== null && tasks.length > 0 ? (
             <>
-              {tasks.map((task: any) => (
-                <TaskDetails task={task} />
+              {tasks.map((task, taskId) => (
+                <TaskDetails id={taskId} tasks={tasks} setTask={setTask} />
               ))}
             </>
           ) : null}
